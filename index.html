@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Land Information Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-search@2.9.8/dist/leaflet-search.min.css" />
+<script src="https://unpkg.com/leaflet-control-search@2.9.8/dist/leaflet-search.min.js"></script>
+
+<body>
+
+  <div class="page-wrapper"> <!-- NEW WRAPPER START -->
+
+    <!-- Top Navbar -->
+    <nav class="navbar">
+      <h1 class="logo">LIS</h1>
+      <ul class="nav-links">
+        <li><a href="#" onclick="showSection('home')">Home</a></li>
+        <li><a href="#" onclick="showSection('about')">About</a></li>
+        <li><a href="#" onclick="showSection('map-section')">Map View</a></li>
+        <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+      </ul>
+      <div id="user-profile">
+        <span id="role-display">Surveyor</span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Main Sections -->
+    <main>
+      <!-- Home Section -->
+<section id="home" class="section active home-landing">
+  <div class="home-content">
+    <h2>Welcome to the Land Information Management System (LIS) of Murang’a Municipality</h2>
+    <p class="tagline">Empowering Smart Land Management through Accurate, Accessible Spatial Data</p>
+
+    <p class="intro">
+      The LIS platform is your gateway to comprehensive land parcel information in Murang’a Municipality. It provides 
+      intuitive tools for searching, visualizing, and analyzing property boundaries and the more attributes of the parcel.
+
+    <ul class="features">
+      <li> ✅ Search parcels by ID or owner</li>
+      <li> ✅ View real-time spatial data directly from GeoServer</li>
+      
+    </ul>
+
+    <a href="#" class="cta-button" onclick="showSection('map-section')">Explore the Map </a>
+  </div>
+</section>
+
+
+    <!-- About Section -->
+<section id="about" class="section about-section">
+  <div class="about-container">
+    <div class="about-text">
+      <h2>About the System</h2>
+      <p>
+        The Land Information System (LIS) for Murang’a Municipality is a modern digital platform built to support effective land administration, spatial planning, and service delivery.
+        It integrates parcel data from authoritative sources and provides a user-friendly interface to help users search, analyze, and visualize land information seamlessly.
+      </p>
+      <p>
+        Whether you're a surveyor, planner, investor, or citizen, LIS empowers you with accurate, up-to-date information to make informed decisions about land use, ownership, and infrastructure development.
+      </p>
+      <ul class="about-features">
+        <li>📍 Integrated with GeoServer for real-time spatial data</li>
+        <li>🔍 Advanced parcel search by ID, owner, or internal code</li>
+        <li>📊 Supports data-driven planning and zoning</li>
+        <li>🛡️ Enhances transparency and accountability in land management</li>
+      </ul>
+    </div>
+
+    <div class="about-image">
+      <img src="assets/parcels.png" alt="Map Illustration of Parcel Boundaries" />
+      <p class="image-caption">
+        🗺️ Map illustration showing  digitized parcel boundaries overlaid with the PDP of Murang’a Municipality.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Map Section -->
+<section id="map-section" class="section">
+  <div class="layout">
+    <aside id="sidebar">
+      <h2>Search Parcel</h2>
+
+      <div class="search-wrapper">
+  <div class="search-group">
+    <input type="text" id="searchBox" placeholder="Enter Parcel ID" />
+    <select id="searchType">
+      <option value="parcel_id">Parcel ID</option>
+      <option value="owner">Owner Name</option>
+      <option value="id">ID</option>
+    </select>
+    <button id="searchButton">🔍search</button>
+
+
+  </div>
+</div>
+
+
+
+      <div class="info-section">
+        <h3>Parcel Information</h3>
+        <div id="parcel-info">📌 Click on a parcel to view its details</div>
+      </div>
+    </aside>
+
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+  </div>
+</section>
+
+
+
+
+      <!-- Contact Section -->
+<section id="contact" class="section contact-section">
+  <div class="contact-header">
+    <h2>Contact Us</h2>
+    <p>We’re here to assist you with any questions or feedback you may have about the Land Information System.</p>
+  </div>
+
+  <div class="contact-container">
+    <div class="contact-card">
+      <div class="icon-box">📍</div>
+      <h3>Office Address</h3>
+      <p>
+        Murang'a GIS Office<br />
+        Land and Urban Planning Department<br />
+        Murang'a County, Kenya
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <div class="icon-box">📞</div>
+      <h3>Phone</h3>
+      <p>
+        +254 768 43214<br />
+        +254 740 54015
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <div class="icon-box">✉️</div>
+      <h3>Email</h3>
+      <p>
+        <a href="mailto:antonykatoi0@gmail.com">antonykatoi0@gmail.com</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+      </section>
+    </main>
+
+  </div> <!-- END OF WRAPPER -->
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Land Information System</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    document.getElementById("searchButton").addEventListener("click", function () {
+  searchParcel();
+});
+
+   document.getElementById("searchBox").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); // avoid form submission
+    searchParcel();
+  }
+});
+
+document.getElementById("searchType").addEventListener("change", function () {
+  const searchType = this.value;
+  const searchBox = document.getElementById("searchBox");
+
+  if (searchType === "id") {
+    searchBox.placeholder = "Enter Internal ID";
+  } else if (searchType === "parcel_id") {
+    searchBox.placeholder = "Enter Parcel ID";
+  } else if (searchType === "owner") {
+    searchBox.placeholder = "Enter Owner Name";
+  }
+});
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      const section = document.getElementById(id);
+      if (section) section.classList.add('active');
+      if (id === 'map-section' && typeof initMap === 'function') initMap();
+    }
+  function checkLogin() {
+    const username = localStorage.getItem("loggedInUser");
+    if (!username) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("role-display").innerText = `Welcome, ${username}`;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+  }
+
+  checkLogin(); // Call on page load
+
+  </script>
+</body>
